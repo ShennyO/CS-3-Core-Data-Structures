@@ -1,6 +1,8 @@
 #!python
 
 import string
+from math import pow
+import pdb
 # Hint: Use these string constants to encode/decode hexadecimal digits and more
 # string.digits is '0123456789'
 # string.hexdigits is '0123456789abcdefABCDEF'
@@ -17,6 +19,33 @@ def decode(digits, base):
     return: int -- integer representation of number (in base 10)"""
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
+
+    letters_dict = {'a': 10, 'b': 11, 'c': 12, 'd': 13, 'e': 14, 'f': 15}
+    number_array = []
+    result = 0
+
+    #reversing our string, because computers read from left to right
+    digits = ''.join(reversed(digits))
+    for index, value in enumerate(digits):
+        letter_value = 0
+        #looping through our string
+        #check if the value is a letter, if it matches anything in our letters_dict, pull that value
+        if digits[index] in letters_dict:
+            letter_value = letters_dict[value]
+        #if it's not a letter, just pull the value and make it an int
+        else:
+            letter_value = int(value)
+        #now at the end of each loop, multiply our value by what the base is to the index power
+        base_index = pow(base, index)
+        num = letter_value * base_index
+        number_array.append(num)
+
+    #after getting our number array, loop through the array in add up everything
+    for num in number_array:
+        result += num
+    return int(result)
+
+    return number_array
     # TODO: Decode digits from binary (base 2)
     # ...
     # TODO: Decode digits from hexadecimal (base 16)
