@@ -20,7 +20,8 @@ def decode(digits, base):
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
 
-    letters_dict = {'a': 10, 'b': 11, 'c': 12, 'd': 13, 'e': 14, 'f': 15}
+    letters_dict = {'a': 10, 'b': 11, 'c': 12, 'd': 13, 'e': 14, 'f': 15, 'g': 16, 'h': 17, 'i': 18, 'j': 19, 'k': 20, 'l': 21}
+
     number_array = []
     result = 0
 
@@ -68,7 +69,45 @@ def encode(number, base):
     # TODO: Encode number in hexadecimal (base 16)
     # ...
     # TODO: Encode number in any base (2 up to 36)
-    # ...
+
+    power = 0
+    digit = 0
+    result = ""
+    #First we have to see which base_power to start with
+
+
+    while pow(base, power) < number:
+        power += 1
+    #At this point we know where to start from, now we see how many times that base_power goes into our number
+    #We want to loop backwards from our current power to 0
+
+    while power >= 0:
+        #If Else logic: We are incrementing our digit until we the value is greater than our current number
+        #This will make the current digit the largest possible digit for that base_power
+        #And after we get the largest possible digit, we check if that digit is bigger than 10 for the letter and
+        #Add it to our string
+
+        #if the base_power is less than or equal to the current number
+        if pow(base, power) <= number:
+            digit += 1
+            number -= pow(base, power)
+        #When our base_power is greater than the current number
+        else:
+            #Here we will add the current digit to our result
+            #we may have to check if it will become a letter
+            if digit >= 10:
+                digit = chr(digit + 87)
+            print(digit)
+            result += str(digit)
+            if result == "0":
+                result = ""
+
+            digit = 0
+            power -= 1
+    if result == '':
+        result = '0'
+
+    return result
 
 
 def convert(digits, base1, base2):
