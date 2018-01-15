@@ -1,5 +1,5 @@
 #!python
-
+import pdb
 import string
 # Hint: Use these string constants to ignore capitalization and/or punctuation
 # string.ascii_lowercase is 'abcdefghijklmnopqrstuvwxyz'
@@ -19,7 +19,25 @@ def is_palindrome(text):
 
 def is_palindrome_iterative(text):
     # TODO: implement the is_palindrome function iteratively here
-    pass
+    #first filter out punctuation, actually, we may not even need to, we can just check if its an integer or char
+    #Now we we make all the letters lowercase
+    
+    text = text.replace(" ", "")
+    normal_text = ""
+    reversed_text = ""
+    for index in text:
+        if index not in string.punctuation:
+            normal_text += index.lower()
+    #now we have all our letters
+    for index in reversed(normal_text):
+        if index not in string.punctuation:
+            reversed_text += index
+    if normal_text == reversed_text:
+        return True
+    else:
+        return False
+
+
     # once implemented, change is_palindrome to call is_palindrome_iterative
     # to verify that your iterative implementation passes all tests
 
