@@ -9,18 +9,24 @@ def factorial(n):
     # implement factorial_iterative and factorial_recursive below, then
     # change this to call your implementation to verify it passes all tests
     # return factorial_iterative(n)
-    return factorial_recursive(n)
+    return factorial_iterative(n)
 
 
 def factorial_iterative(n):
     # TODO: implement the factorial function iteratively here
-    pass
+    product = 1
+    while n > 0:
+        product *= n
+        n-=1
+
+    return product
     # once implemented, change factorial (above) to call factorial_iterative
     # to verify that your iterative implementation passes all tests
 
 
 def factorial_recursive(n):
     # check if n is one of the base cases
+
     if n == 0 or n == 1:
         return 1
     # check if n is an integer larger than the base cases

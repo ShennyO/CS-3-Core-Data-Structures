@@ -31,8 +31,9 @@ def decode(digits, base):
         letter_value = 0
         #looping through our string
         #check if the value is a letter, if it matches anything in our letters_dict, pull that value
-        if digits[index] in letters_dict:
-            letter_value = letters_dict[value]
+        if digits[index].isalpha():
+            letter_value = ord(digits[index]) - 87
+
         #if it's not a letter, just pull the value and make it an int
         else:
             letter_value = int(value)
@@ -127,6 +128,9 @@ def convert(digits, base1, base2):
     # ...
     # TODO: Convert digits from any base to any base (2 up to 36)
     # ...
+    base_ten = decode(digits, base1)
+    result = encode(base_ten, base2)
+    return result
 
 
 def main():
