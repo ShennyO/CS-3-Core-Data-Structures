@@ -58,14 +58,14 @@ def is_palindrome_recursive(text, left=None, right=None):
             if index not in string.punctuation:
                 normal_text += index.lower()
         #This is for the first time the function is ran, when left and right is None
-
+        text = normal_text
         left = 0
 
         right = len(text) - 1
-        text = normal_text
+
 
     #If theres only one character left we should return True
-    pdb.set_trace()
+    # pdb.set_trace()
     if left == right:
         return True
     #If the selected characters do not equal each other, it's false
@@ -73,7 +73,7 @@ def is_palindrome_recursive(text, left=None, right=None):
         if text[left] != text[right]:
             return False
         else:
-            is_palindrome_recursive(text, left + 1, right - 1)
+            return is_palindrome_recursive(text, left + 1, right - 1)
 
     return True
 
