@@ -48,12 +48,7 @@ def decode(digits, base):
     return int(result)
 
     return number_array
-    # TODO: Decode digits from binary (base 2)
-    # ...
-    # TODO: Decode digits from hexadecimal (base 16)
-    # ...
-    # TODO: Decode digits from any base (2 up to 36)
-    # ...
+    
 
 
 def encode(number, base):

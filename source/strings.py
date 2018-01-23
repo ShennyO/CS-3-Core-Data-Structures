@@ -5,7 +5,21 @@ def contains(text, pattern):
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # TODO: Implement contains here (iteratively and/or recursively)
-
+    #iterating through our text
+    if pattern == "":
+        return True
+    checker = ""
+    pattern_length = len(pattern)
+    for index, letter in enumerate(text):
+        #if the current letter is equal to our first letter of pattern
+        if letter == pattern[0]:
+            checker = ""
+            for x in range(pattern_length):
+                letter_index = index + x
+                checker += text[letter_index]
+            if checker == pattern:
+                return True
+    return False
 
 def find_index(text, pattern):
     """Return the starting index of the first occurrence of pattern in text,
@@ -30,8 +44,8 @@ def test_string_algorithms(text, pattern):
     index = find_index(text, pattern)
     print('find_index({!r}, {!r}) => {}'.format(text, pattern, index))
     # TODO: Uncomment these lines after you implement find_all_indexes
-    indexes = find_all_indexes(text, pattern)
-    print('find_all_indexes({!r}, {!r}) => {}'.format(text, pattern, indexes))
+    # indexes = find_all_indexes(text, pattern)
+    # print('find_all_indexes({!r}, {!r}) => {}'.format(text, pattern, indexes))
 
 
 def main():
