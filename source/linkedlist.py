@@ -1,5 +1,6 @@
 #!python
 
+import pdb
 class Node(object):
 
     def __init__(self, data):
@@ -79,6 +80,13 @@ class LinkedList(object):
         if not (0 <= index < self.size):
             raise ValueError('List index out of range: {}'.format(index))
         # TODO: Find the node at the given index and return its data
+        node = self.head
+
+        while index > 0:
+            node = node.next
+            index -= 1
+
+        return node.data
 
     def insert_at_index(self, index, item):
         """Insert the given item at the given index in this linked list, or
@@ -89,12 +97,38 @@ class LinkedList(object):
         if not (0 <= index <= self.size):
             raise ValueError('List index out of range: {}'.format(index))
         # TODO: Find the node before the given index and insert item after it
+        counter = 0
+        new_node = Node(item)
+
+        # pdb.set_trace()
+        if self.is_empty():
+            self.head = new_node
+            self.tail = new_node
+
+        elif index is 0:
+            new_node.next = self.head
+            self.head = new_node
+        elif index == self.size:
+            self.tail.next = new_node
+            self.tail = new_node
+        else:
+            # pdb.set_trace()
+            node = self.head
+            while counter < index:
+                node = node.next
+                counter+=1
+
+            back_node = node.next
+            node.next = new_node
+            new_node.next = back_node
+        self.size += 1
 
     def append(self, item):
         """Insert the given item at the tail of this linked list.
         Best and worst case running time: ??? under what conditions? [TODO]"""
         # Create a new node to hold the given item
         new_node = Node(item)
+        self.size += 1
         # Check if this linked list is empty
         if self.is_empty():
             # Assign head to new node
@@ -110,6 +144,7 @@ class LinkedList(object):
         Best and worst case running time: ??? under what conditions? [TODO]"""
         # Create a new node to hold the given item
         new_node = Node(item)
+        self.size += 1
         # Check if this linked list is empty
         if self.is_empty():
             # Assign tail to new node
@@ -145,7 +180,19 @@ class LinkedList(object):
         Worst case running time: ??? under what conditions? [TODO]"""
         # TODO: Find the node containing the given old_item and replace its
         # data with new_item, without creating a new node object
-        pass
+        node = self.head
+        found = False
+
+        while node is not None:
+            if node.data is old_item:
+                node.data = new_item
+                found = True
+            node = node.next
+
+
+        if found is False:
+            raise ValueError('old item not found: {}'.format(old_item))
+
 
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError.
@@ -169,6 +216,7 @@ class LinkedList(object):
                 node = node.next
         # Check if we found the given item or we never did and reached the tail
         if found:
+            self.size -= 1
             # Check if we found a node in the middle of this linked list
             if node is not self.head and node is not self.tail:
                 # Update the previous node to skip around the found node
