@@ -243,6 +243,7 @@ class LinkedList(object):
 
 
 def test_linked_list():
+    
     ll = LinkedList()
     print(ll)
 
