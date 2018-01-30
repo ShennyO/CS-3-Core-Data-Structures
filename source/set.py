@@ -6,13 +6,13 @@ class Set(object):
 
     def __init__(self, elements=None):
         """ initialize a set object with a Hashtable """
-        if elements is None:
-            self.set = HashTable()
-        else:
-            self.set = HashTable()
+
+        self.set = HashTable()
+        if elements is not None:
             for element in elements:
                 self.set.set(element, None)
 
+    
     def size(self):
         """ Returns how many items are in the set """
         return self.set.size
@@ -40,10 +40,7 @@ class Set(object):
         intersected_set = Set()
 
         for key in new_set.set.keys():
-            if key in self.set.keys():
-                intersected_set.add(key)
-        for key in self.set.keys():
-            if key in new_set.set.keys():
+            if self.set.contains(key):
                 intersected_set.add(key)
 
         return intersected_set
@@ -54,10 +51,10 @@ class Set(object):
         difference_set = Set()
 
         for key in new_set.set.keys():
-            if key not in self.set.keys():
+            if not self.set.contains(key):
                 difference_set.add(key)
         for key in self.set.keys():
-            if key not in new_set.set.keys():
+            if not new_set.set.contains(key):
                 difference_set.add(key)
         return difference_set
 
@@ -79,9 +76,9 @@ def main():
     s.add('Sunny')
     s.add('poo')
     s.add('Eddy')
-
+    s = s.difference(new_s)
     print(s.set.items())
-    print(s.size())
+    print(s.size)
     # print(s.contains('Shut'))
 
 if __name__ == '__main__':
