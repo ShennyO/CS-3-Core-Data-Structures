@@ -1,11 +1,18 @@
 #!python
-
+import pdb
 
 def is_sorted(items):
     """Return a boolean indicating whether given items are in sorted order.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
     # TODO: Check that all adjacent items are in order, return early if not
+    # pdb.set_trace()
+    if len(items) > 1:
+        for index, item in enumerate(items):
+            if index < len(items) - 1:
+                if items[index] > items[index + 1]:
+                    return False
+    return True
 
 
 def bubble_sort(items):
@@ -15,7 +22,21 @@ def bubble_sort(items):
     TODO: Memory usage: ??? Why and under what conditions?"""
     # TODO: Repeat until all items are in sorted order
     # TODO: Swap adjacent items that are out of order
-
+    if is_sorted(items):
+        return
+    else:
+        for index, item in enumerate(items):
+            if index < len(items) - 1:
+                if items[index] > items[index + 1]:
+                    items[index], items[index + 1] = items[index + 1], items[index]
+                    # larger = items[index]
+                    # smaller = items[index + 1]
+                    # items[index] = smaller
+                    # items[index + 1] = larger
+        if is_sorted(items):
+            return
+        else:
+            bubble_sort(items)
 
 def selection_sort(items):
     """Sort given items by finding minimum item, swapping it with first
@@ -25,6 +46,21 @@ def selection_sort(items):
     # TODO: Repeat until all items are in sorted order
     # TODO: Find minimum item in unsorted items
     # TODO: Swap it with first unsorted item
+    if is_sorted(items):
+        return
+    else:
+        count = 0
+        while count < len(items):
+            smallest = items[count]
+            index = count
+            for x in range(count, len(items)):
+                if items[x] < smallest:
+                    smallest = items[x]
+                    index = x
+            first = items[count]
+            items[count] = smallest
+            items[index] = first
+            count += 1
 
 
 def insertion_sort(items):
@@ -35,6 +71,20 @@ def insertion_sort(items):
     # TODO: Repeat until all items are in sorted order
     # TODO: Take first unsorted item
     # TODO: Insert it in sorted order in front of items
+    # if is_sorted(items):
+    #     return
+    # else:
+        #Count is used to separate the sorted and the unsorted part of the list
+        count = 0
+        while count < len(items):
+            current_item = items[count]
+            for x in reversed(range(0, count)):
+                if current_item < items[x]:
+                    items[x+1], items[x] = items[x], current_item
+            count += 1
+
+
+
 
 
 def merge(items1, items2):
@@ -132,7 +182,7 @@ def main():
         return
 
     # Test sort function
-    test_sorting(sort_function, num_items, max_value)
+    test_sorting(insertion_sort, num_items, max_value)
 
 
 if __name__ == '__main__':
