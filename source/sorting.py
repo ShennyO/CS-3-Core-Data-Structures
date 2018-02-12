@@ -61,6 +61,7 @@ def selection_sort(items):
             items[count] = smallest
             items[index] = first
             count += 1
+        return items
 
 
 def insertion_sort(items):
@@ -71,10 +72,10 @@ def insertion_sort(items):
     # TODO: Repeat until all items are in sorted order
     # TODO: Take first unsorted item
     # TODO: Insert it in sorted order in front of items
-    # if is_sorted(items):
-    #     return
-    # else:
-        #Count is used to separate the sorted and the unsorted part of the list
+    if is_sorted(items):
+        return items
+    else:
+        # Count is used to separate the sorted and the unsorted part of the list
         count = 0
         while count < len(items):
             current_item = items[count]
@@ -82,7 +83,7 @@ def insertion_sort(items):
                 if current_item < items[x]:
                     items[x+1], items[x] = items[x], current_item
             count += 1
-
+        return items
 
 
 
@@ -95,6 +96,24 @@ def merge(items1, items2):
     # TODO: Repeat until one list is empty
     # TODO: Find minimum item in both lists and append it to new list
     # TODO: Append remaining items in non-empty list to new list
+    result = []
+    items1_index = 0
+    items2_index = 0
+    while items1_index < len(items1) and items2_index < len(items2):
+        if items1[items1_index] < items2[items2_index]:
+            result.append(items1[items1_index])
+            items1_index += 1
+        else:
+            result.append(items2[items2_index])
+            items2_index += 1
+    if items1_index == len(items1):
+        for x in range(items2_index, len(items2)):
+            result.append(items2[x])
+    else:
+        for x in range(items1_index, len(items1)):
+            result.append(items1[x])
+    # pdb.set_trace()
+    return result
 
 
 def split_sort_merge(items):
@@ -106,6 +125,16 @@ def split_sort_merge(items):
     # TODO: Split items list into approximately equal halves
     # TODO: Sort each half using any other sorting algorithm
     # TODO: Merge sorted halves into one list in sorted order
+    first_half = items[:len(items)//2]
+    second_half = items[len(items)//2:]
+    # pdb.set_trace()
+    first_half = selection_sort(first_half)
+    second_half = selection_sort(second_half)
+    items = merge(first_half, second_half)
+    print(items)
+    return items
+
+
 
 
 def merge_sort(items):
@@ -117,6 +146,15 @@ def merge_sort(items):
     # TODO: Split items list into approximately equal halves
     # TODO: Sort each half by recursively calling merge sort
     # TODO: Merge sorted halves into one list in sorted order
+    if is_sorted(items):
+        return items
+    else:
+        first_half = items[:len(items)//2]
+        second_half = items[len(items)//2:]
+        first_half = merge_sort(first_half)
+        second_half = merge_sort(second_half)
+        items = merge(first_half, second_half)
+        return items
 
 
 def random_ints(count=20, min=1, max=50):
@@ -126,7 +164,7 @@ def random_ints(count=20, min=1, max=50):
     return [random.randint(min, max) for _ in range(count)]
 
 
-def test_sorting(sort=bubble_sort, num_items=20, max_value=50):
+def test_sorting(sort=merge_sort, num_items=20, max_value=50):
     """Test sorting algorithms with a small list of random items."""
     # Create a list of items randomly sampled from range [1...max_value]
     items = random_ints(num_items, 1, max_value)
@@ -136,7 +174,7 @@ def test_sorting(sort=bubble_sort, num_items=20, max_value=50):
     # Change this sort variable to the sorting algorithm you want to test
     # sort = bubble_sort
     print('Sorting items with {}(items)'.format(sort.__name__))
-    sort(items)
+    items = sort(items)
     print('Sorted items:  {!r}'.format(items))
     print('Sorted order?  {!r}'.format(is_sorted(items)))
 
@@ -182,7 +220,7 @@ def main():
         return
 
     # Test sort function
-    test_sorting(insertion_sort, num_items, max_value)
+    test_sorting(merge_sort, num_items, max_value)
 
 
 if __name__ == '__main__':
